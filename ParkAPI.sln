@@ -3,13 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Park.API", "ParkAPI\Park.API.csproj", "{3BBD263D-6CD1-42CA-A85B-656FA73208AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.API", "ParkAPI\Park.API.csproj", "{3BBD263D-6CD1-42CA-A85B-656FA73208AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Park.Infrastructure", "Park.Infrastructure\Park.Infrastructure.csproj", "{4ED14CD0-1EF3-4D6A-925F-E789EB521C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.Infrastructure", "Park.Infrastructure\Park.Infrastructure.csproj", "{4ED14CD0-1EF3-4D6A-925F-E789EB521C39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D} = {19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Park.Core", "Park.Core\Park.Core.csproj", "{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parks.Core", "Park.Core\Parks.Core.csproj", "{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Park.Tests", "Park.Tests\Park.Tests.csproj", "{D26AF5A2-780C-4BA8-BF16-DC088CA1CB63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.Tests", "Park.Tests\Park.Tests.csproj", "{D26AF5A2-780C-4BA8-BF16-DC088CA1CB63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
