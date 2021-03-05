@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ParkAPI.DataContext;
 
 namespace ParkAPI
 {
@@ -26,6 +28,9 @@ namespace ParkAPI
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddDbContext<ParkDbContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
