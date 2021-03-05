@@ -14,12 +14,12 @@ namespace ParkAPI.DataContext
 
     }
 
-    public DbSet<Park> Type { get; set; }
+    public DbSet<Parks.Core.Park> Type { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Park>().HasData(
-        new Park()
+      modelBuilder.Entity<Parks.Core.Park>().HasData(
+        new Parks.Core.Park()
         {
           Created = DateTime.Now,
           Established = DateTime.Today,
@@ -28,8 +28,8 @@ namespace ParkAPI.DataContext
           Name = "MyName"
         }
       );
-      modelBuilder.Entity<Park>().HasData(
-        new Park()
+      modelBuilder.Entity<Parks.Core.Park>().HasData(
+        new Parks.Core.Park()
         {
           Created = DateTime.Parse("1990-10-12"),
           Established = DateTime.FromBinary(101000010101111),
