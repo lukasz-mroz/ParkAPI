@@ -29,6 +29,7 @@ namespace Park.API.Controllers
     /// <param name="bandId"></param>
     /// <returns></returns>
     [HttpGet]
+    [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult GetBand(Guid bandId)
     {
