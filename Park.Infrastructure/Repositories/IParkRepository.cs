@@ -1,7 +1,10 @@
-﻿namespace Parks.Cores
+﻿using System.Collections.Generic;
+
+namespace Parks.Cores
 {
   public interface IParkRepository
   {
-    void BandAdd();
+    IEnumerable<Parky> GetBand();
+    void AddBand();
   }
 }

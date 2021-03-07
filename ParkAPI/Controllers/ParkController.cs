@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Parks.Cores;
 
 namespace Park.API.Controllers
 {
@@ -11,6 +12,12 @@ namespace Park.API.Controllers
   [Route("[controller]")]
   public class ParkController : ControllerBase
   {
+    private readonly IParkRepository _park;
+
+    public ParkController(IParkRepository park)
+    {
+      _park = park;
+    }
 
     /// <summary>
     /// Getting all bands from repositories
@@ -28,16 +35,12 @@ namespace Park.API.Controllers
     /// </summary>
     /// <param name="bandId"></param>
     /// <returns></returns>
-    [HttpGet("{bandId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult GetBand(Guid bandId)
+    public IActionResult GetBand()
     {
-      if(bandId == null)
-        throw new ArgumentNullException(nameof(bandId));
+      var bandFromRepo = _park.GetBand();
 
-
-
-      return Ok(bandId);
+      return Ok(bandFromRepo);
     }
   }
 }
