@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParkAPI.DataContext;
+using Parks.Cores;
 
 namespace ParkAPI
 {
@@ -30,6 +31,7 @@ namespace ParkAPI
       services.AddControllers();
       services.AddDbContext<ParkDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      services.AddScoped<IParkRepository, ParkRepository>();
 
     }
 

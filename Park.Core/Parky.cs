@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parks.Core
+namespace Parks.Cores
 {
-  public class Park
+  public class Parky
   {
     [Key]
     public Guid Id { get; set; }

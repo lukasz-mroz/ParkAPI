@@ -1,4 +1,4 @@
-﻿namespace Parks.Core
+﻿namespace Parks.Cores
 {
   public interface IParkRepository
   {

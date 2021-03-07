@@ -28,13 +28,14 @@ namespace Park.API.Controllers
     /// </summary>
     /// <param name="bandId"></param>
     /// <returns></returns>
-    [HttpGet]
-    [Route("")]
+    [HttpGet("{bandId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult GetBand(Guid bandId)
     {
       if(bandId == null)
         throw new ArgumentNullException(nameof(bandId));
+
+
 
       return Ok(bandId);
     }

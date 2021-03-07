@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ParkAPI.DataContext;
 
-namespace Parks.Core
+
+namespace Parks.Cores
 {
-  class ParkRepository : IParkRepository
+
+  public class ParkRepository : IParkRepository
   {
     private readonly ParkDbContext _dbContext;
     public void BandAdd()

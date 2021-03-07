@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Park.Core\Parks.Cores.csproj" />
     <ProjectReference Include="..\Park.Infrastructure\Park.Infrastructure.csproj" />
   </ItemGroup>
 
