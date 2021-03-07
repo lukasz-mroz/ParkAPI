@@ -18,11 +18,9 @@ namespace Parks.Cores
     }
 
 
-    public IEnumerable<Parky> GetBand()
+    public IEnumerable<Parky> GetParks()
     {
-      var dbContextPark =  _dbContext.Parks.Where(a => a.Name == "Alabama");
-
-      return dbContextPark;
+      return 
     }
 
     public void AddBand()

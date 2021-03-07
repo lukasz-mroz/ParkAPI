@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Parks.Cores;
+using Parks.Cores.Dtos;
 
 namespace Park.API.Controllers
 {
@@ -13,10 +15,12 @@ namespace Park.API.Controllers
   public class ParkController : ControllerBase
   {
     private readonly IParkRepository _park;
+    private readonly IMapper _mapper;
 
-    public ParkController(IParkRepository park)
+    public ParkController(IParkRepository park, IMapper mapper)
     {
       _park = park;
+      _mapper = mapper;
     }
 
     /// <summary>
@@ -24,23 +28,15 @@ namespace Park.API.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [Route("getbands")]
+    [Route("getband")]
     public IActionResult GetBands()
     {
-      throw new NotImplementedException();
+      var allBands = _park.GetBand();
+
+      return Ok(allBands);
     }
 
-    /// <summary>
-    /// Getting specific BandId
-    /// </summary>
-    /// <param name="bandId"></param>
-    /// <returns></returns>
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult GetBand()
-    {
-      var bandFromRepo = _park.GetBand();
-
-      return Ok(bandFromRepo);
-    }
+    
   }
 }
+
