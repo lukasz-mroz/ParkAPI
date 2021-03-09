@@ -29,14 +29,26 @@ namespace Park.API.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("getband")]
-    public IActionResult GetBands()
+    public void GetBands()
     {
-      var allBands = _park.GetBand();
+      // TODO rewrite this code here
+    // var allBands = _park.GetBand();
 
-      return Ok(allBands);
+     //return Ok(allBands);
     }
 
-    
+
+    [HttpPost]
+    public IActionResult CreatePark([FromBody] Parky park)
+    {
+      if(park == null)
+        throw new ArgumentNullException(nameof(park));
+
+      IEnumerable<Parky> parkFromRepo = _park.AddPark(park);
+
+      return Ok(parkFromRepo);
+    }
+
   }
 }
 

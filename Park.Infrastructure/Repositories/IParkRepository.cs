@@ -5,7 +5,13 @@ namespace Parks.Cores
 {
   public interface IParkRepository
   {
-    IEnumerable<Parky> GetParks(Guid parkId);
-    void AddBand();
+    IEnumerable<Parky> GetParks();
+    IEnumerable<Parky> GetPark(Guid parkId);
+    void AddPark(Parky park);
+    void UpdatePark(Guid parkId);
+    void AddParks(IEnumerable<Parky> parks);
+    void DeletePark(Parky parkyDeleted);
+
+
   }
 }

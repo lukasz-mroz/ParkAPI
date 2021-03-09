@@ -12,5 +12,6 @@ namespace Parks.Cores
     public string State { get; set; }
     public DateTime Created { get; set; }
     public DateTime Established { get; set; }
+    public bool IsDeleted { get; set; }
   }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Parks.Cores;
-
+// Mapster
 namespace ParkAPI.DataContext
 {
   public class ParkDbContext : DbContext
@@ -23,7 +23,9 @@ namespace ParkAPI.DataContext
           Established = DateTime.Today,
           Id = Guid.Parse("F9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
           State = "New",
-          Name = "MyName"
+          Name = "MyName",
+          IsDeleted = false
+
         }
       );
       modelBuilder.Entity<Parky>().HasData(
@@ -33,7 +35,8 @@ namespace ParkAPI.DataContext
           Established = DateTime.FromBinary(101000010101111),
           Id = Guid.NewGuid(),
           Name = "Alabama",
-          State = String.Concat("my Dear Frodo" + " Back and Again")
+          State = String.Concat("my Dear Frodo" + " Back and Again"),
+          IsDeleted = true
         });
       base.OnModelCreating(modelBuilder);
     }
