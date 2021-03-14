@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ParkAPI.DataContext;
 
 namespace Parks.Cores
@@ -17,9 +19,10 @@ namespace Parks.Cores
     }
 
 
-    public IEnumerable<Parky> GetParks()
+    public async Task<IEnumerable<Parky>> GetParks()
     {
-      throw new NotImplementedException();
+      var parkFromDb = await _dbContext.Parks.ToListAsync();
+      return parkFromDb;
     }
 
     public IEnumerable<Parky> GetPark(Guid parkId)

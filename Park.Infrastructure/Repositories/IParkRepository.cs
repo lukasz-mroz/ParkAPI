@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Parks.Cores
 {
   public interface IParkRepository
   {
-    IEnumerable<Parky> GetParks();
+    Task<IEnumerable<Parky>> GetParks();
     IEnumerable<Parky> GetPark(Guid parkId);
     void AddPark(Parky park);
     void UpdatePark(Guid parkId);

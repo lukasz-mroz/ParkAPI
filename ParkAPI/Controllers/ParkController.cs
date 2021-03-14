@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parks.Cores;
 using Parks.Cores.Dtos;
 
@@ -19,8 +20,8 @@ namespace Park.API.Controllers
 
     public ParkController(IParkRepository park, IMapper mapper)
     {
-      _park = park;
-      _mapper = mapper;
+      _park = park ?? throw new ArgumentNullException(nameof(park));
+      _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     /// <summary>
@@ -29,25 +30,24 @@ namespace Park.API.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("getband")]
-    public void GetBands()
+    public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
-      // TODO rewrite this code here
-    // var allBands = _park.GetBand();
-
-     //return Ok(allBands);
+      var parksFromRepo = await _park.GetParks();
+      return Ok(parksFromRepo);
     }
 
 
-    [HttpPost]
-    public IActionResult CreatePark([FromBody] Parky park)
-    {
-      if(park == null)
-        throw new ArgumentNullException(nameof(park));
+    //[HttpPost]
+    //public async Task<IActionResult> CreatePark([FromBody] Parky park)
+    //{
+    //  if(park == null)
+    //    throw new ArgumentNullException(nameof(park));
 
-      IEnumerable<Parky> parkFromRepo = _park.AddPark(park);
 
-      return Ok(parkFromRepo);
-    }
+    //  var parkFromRepo = await _park.AddPark(park);
+
+    //  return Ok(parkFromRepo);
+    //}
 
   }
 }
