@@ -33,6 +33,7 @@ namespace ParkAPI
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddScoped<IParkRepository, ParkRepository>();
       services.AddAutoMapper(typeof(Startup));
+      services.AddHttpClient();
 
     }
 

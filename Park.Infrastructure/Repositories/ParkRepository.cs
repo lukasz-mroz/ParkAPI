@@ -41,7 +41,7 @@ namespace Parks.Cores
       _dbContext.Parks.Add(park);
     }
 
-    public void UpdatePark(Guid parkId)
+    public void UpdatePark(Parky park)
     {
       throw new NotImplementedException();
     }

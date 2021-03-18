@@ -9,9 +9,9 @@ namespace Parks.Cores
     Task<IEnumerable<Parky>> GetParks();
     IEnumerable<Parky> GetPark(Guid parkId);
     void AddPark(Parky park);
-    void UpdatePark(Guid parkId);
+    void UpdatePark(Parky park);
     void AddParks(IEnumerable<Parky> parks);
-    void DeletePark(Parky parkyDeleted);
+    void DeletePark(Parky park);
 
 
   }

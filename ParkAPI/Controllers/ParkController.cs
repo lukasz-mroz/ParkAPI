@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Parks.Cores;
 using Parks.Cores.Dtos;
 
@@ -17,11 +21,16 @@ namespace Park.API.Controllers
   {
     private readonly IParkRepository _park;
     private readonly IMapper _mapper;
+    private readonly IHttpClientFactory _client;
+    private readonly ILogger _logger;
 
-    public ParkController(IParkRepository park, IMapper mapper)
+
+    public ParkController(IParkRepository park, IMapper mapper, IHttpClientFactory client, ILogger logger)
     {
       _park = park ?? throw new ArgumentNullException(nameof(park));
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+      _client = client ?? throw new ArgumentNullException(nameof(client));
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -33,22 +42,51 @@ namespace Park.API.Controllers
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
       var parksFromRepo = await _park.GetParks();
+
+
+
       return Ok(parksFromRepo);
     }
 
 
-    //[HttpPost]
-    //public async Task<IActionResult> CreatePark([FromBody] Parky park)
-    //{
-    //  if(park == null)
-    //    throw new ArgumentNullException(nameof(park));
+    [HttpGet]
+    public async Task<string> GetFromApi()
 
+    {
+      var client = _client.CreateClient();
 
-    //  var parkFromRepo = await _park.AddPark(park);
+      client.BaseAddress =
+        new Uri("https://api.exchangeratesapi.io");
+      client.DefaultRequestHeaders.Add(
+        HeaderNames.UserAgent, "ExchangeRateViewer");
 
-    //  return Ok(parkFromRepo);
-    //}
+      var response = await client.GetAsync("latest");
 
+      response.EnsureSuccessStatusCode();
+
+      return await response.Content.ReadAsStringAsync();
+    }
+
+    [HttpPost]
+    public ActionResult<ParkyDto> CreatePark([FromBody] ParkForCreatingDto park)
+    {
+      if (park == null)
+      {
+        _logger.LogError("describe the problem");
+        return BadRequest("ParkForCreatingDto is null");
+      }
+
+      var parkEntity = _mapper.Map<Parky>(park);
+      _park.AddPark(parkEntity);
+
+      var parkToReturn = _mapper.Map<ParkyDto>(parkEntity);
+
+      throw new NotImplementedException("errr");
+
+    }
   }
+
+
 }
+
 
