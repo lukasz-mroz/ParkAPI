@@ -9,7 +9,7 @@ using ParkAPI.DataContext;
 namespace Parks.Cores
 {
   //TODO add abstract class generic 
-  public class ParkRepository : IParkRepository
+  public class ParkRepository : RepositoryBase<Parky>, IParkRepository
   {
     private readonly ParkDbContext _dbContext;
 
