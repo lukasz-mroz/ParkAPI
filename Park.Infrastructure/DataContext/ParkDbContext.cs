@@ -9,7 +9,6 @@ namespace ParkAPI.DataContext
 
     public ParkDbContext(DbContextOptions<ParkDbContext> options) : base(options)
     {
-
     }
 
     public DbSet<Parky> Parks { get; set; }

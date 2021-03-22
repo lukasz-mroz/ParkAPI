@@ -8,16 +8,11 @@ using ParkAPI.DataContext;
 
 namespace Parks.Cores
 {
-  //TODO add abstract class generic 
   public class ParkRepository : RepositoryBase<Parky>, IParkRepository
   {
-    private readonly ParkDbContext _dbContext;
-
-    public ParkRepository(ParkDbContext dbContext)
+    public ParkRepository(ParkDbContext dbContext) : base(dbContext)
     {
-      _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
-
 
     public async Task<IEnumerable<Parky>> GetParks()
     {

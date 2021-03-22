@@ -25,7 +25,8 @@ namespace Park.API.Controllers
     private readonly ILogger _logger;
 
 
-    public ParkController(IParkRepository park, IMapper mapper, IHttpClientFactory client, ILogger logger)
+    public ParkController(IParkRepository park, IMapper mapper, 
+      IHttpClientFactory client, ILogger logger)
     {
       _park = park ?? throw new ArgumentNullException(nameof(park));
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -39,11 +40,10 @@ namespace Park.API.Controllers
     /// <returns></returns>
     [HttpGet]
     [Route("getband")]
+    [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
       var parksFromRepo = await _park.GetParks();
-
-
 
       return Ok(parksFromRepo);
     }
@@ -70,16 +70,16 @@ namespace Park.API.Controllers
     [HttpPost]
     public ActionResult<ParkyDto> CreatePark([FromBody] ParkForCreatingDto park)
     {
-      if (park == null)
-      {
-        _logger.LogError("describe the problem");
-        return BadRequest("ParkForCreatingDto is null");
-      }
 
       var parkEntity = _mapper.Map<Parky>(park);
       _park.AddPark(parkEntity);
 
-      var parkToReturn = _mapper.Map<ParkyDto>(parkEntity);
+      if (park == null)
+      {
+        _logger.LogError($"Something went wrong in the {nameof(CreatePark)} action");
+        return BadRequest("ParkForCreatingDto is null");
+      }
+
 
       throw new NotImplementedException("errr");
 
