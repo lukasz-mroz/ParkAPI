@@ -1,15 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ParkAPI.DataContext;
 
 namespace Parks.Cores
 {
-  abstract public class RepositoryBase<T> : IRepositoryBase<T> where T: class
+  public abstract class RepositoryBase<T> : IRepositoryBase<T> where T: class
   {
     protected ParkDbContext _dbContext;
 
     public RepositoryBase(ParkDbContext dbContext)
     {
-       _dbContext = dbContext;
+      _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     public IQueryable<T> GetAll()
@@ -17,9 +18,12 @@ namespace Parks.Cores
       throw new System.NotImplementedException();
     }
 
-    public IQueryable<T>
+    public IQueryable<T> GetOne()
     {
       throw new System.NotImplementedException();
     }
+
+    public void Create(T entity) => _dbContext.Set<T>().Add(entity);
+    
   }
 }

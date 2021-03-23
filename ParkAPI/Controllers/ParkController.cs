@@ -48,7 +48,10 @@ namespace Park.API.Controllers
       return Ok(parksFromRepo);
     }
 
-
+    /// <summary>
+    /// Getting something from external API
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<string> GetFromApi()
 
@@ -66,7 +69,11 @@ namespace Park.API.Controllers
 
       return await response.Content.ReadAsStringAsync();
     }
-
+    /// <summary>
+    /// Creating a new Park
+    /// </summary>
+    /// <param name="park"></param>
+    /// <returns></returns>
     [HttpPost]
     public ActionResult<ParkyDto> CreatePark([FromBody] ParkForCreatingDto park)
     {
@@ -84,6 +91,7 @@ namespace Park.API.Controllers
       throw new NotImplementedException("errr");
 
     }
+
   }
 
 

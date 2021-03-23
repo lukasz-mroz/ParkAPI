@@ -5,6 +5,8 @@ namespace Parks.Cores
   public interface IRepositoryBase<T>
   {
     IQueryable<T> GetAll();
-    IQueryable<T> 
+    IQueryable<T> GetOne();
+    void Create(T entity);
+
   }
 }

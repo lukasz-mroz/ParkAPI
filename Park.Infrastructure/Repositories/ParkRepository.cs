@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParkAPI.DataContext;
@@ -36,6 +35,11 @@ namespace Parks.Cores
       _dbContext.Parks.Add(park);
     }
 
+    public void Create<T>(T entity)
+    {
+      throw new NotImplementedException();
+    }
+
     public void UpdatePark(Parky park)
     {
       throw new NotImplementedException();
@@ -53,5 +57,7 @@ namespace Parks.Cores
 
       _dbContext.Parks.Remove(parky);
     }
+
+    
   }
 }
