@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ParkAPI.DataContext;
 
@@ -13,17 +14,25 @@ namespace Parks.Cores
       _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public IQueryable<T> GetAll()
+    public IEnumerable<T> GetAll()
     {
       throw new System.NotImplementedException();
     }
 
-    public IQueryable<T> GetOne()
+    public IEnumerable<T> GetOne(Guid id)
     {
-      throw new System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public void Create(T entity) => _dbContext.Set<T>().Add(entity);
-    
+    public void Update(Guid id)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void Delete(Guid id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

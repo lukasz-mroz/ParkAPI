@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Parks.Cores;
 using Parks.Cores.Dtos;
+using Parks.Cores.RepositoryManager;
 
 namespace Park.API.Controllers
 {
@@ -19,23 +20,23 @@ namespace Park.API.Controllers
   [Route("[controller]")]
   public class ParkController : ControllerBase
   {
-    private readonly IParkRepository _park;
     private readonly IMapper _mapper;
     private readonly IHttpClientFactory _client;
     private readonly ILogger _logger;
+    private readonly IRepositoryManager _repository;
 
 
-    public ParkController(IParkRepository park, IMapper mapper, 
+    public ParkController(IRepositoryManager repository, IMapper mapper, 
       IHttpClientFactory client, ILogger logger)
     {
-      _park = park ?? throw new ArgumentNullException(nameof(park));
+      _repository = repository ?? throw new ArgumentNullException(nameof(repository));
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
-    /// Getting all bands from repositories
+    /// Getting all bands
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -43,7 +44,7 @@ namespace Park.API.Controllers
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
-      var parksFromRepo = await _park.GetParks();
+      var parksFromRepo = await _repository.Park.GetParks();
 
       return Ok(parksFromRepo);
     }
@@ -79,7 +80,6 @@ namespace Park.API.Controllers
     {
 
       var parkEntity = _mapper.Map<Parky>(park);
-      _park.AddPark(parkEntity);
 
       if (park == null)
       {

@@ -4,7 +4,7 @@ namespace Parks.Cores.RepositoryManager
 {
   public class RepositoryManager : IRepositoryManager
   {
-    private readonly ParkDbContext _dbContext;
+    private ParkDbContext _dbContext;
     private IParkRepository _parkRepository;
 
     public RepositoryManager(ParkDbContext dbContext, IParkRepository parkRepository)
@@ -12,9 +12,6 @@ namespace Parks.Cores.RepositoryManager
       _dbContext = dbContext;
       _parkRepository = parkRepository;
     }
-
-
-
     public IParkRepository Park
     {
       get
