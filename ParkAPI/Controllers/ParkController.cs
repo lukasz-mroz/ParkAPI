@@ -1,9 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
+using Parks.Cores;
+using Parks.Cores.Dtos;
+using Parks.Cores.RepositoryManager;
 
 namespace Park.API.Controllers
 {
@@ -11,32 +20,81 @@ namespace Park.API.Controllers
   [Route("[controller]")]
   public class ParkController : ControllerBase
   {
+    private readonly IMapper _mapper;
+    private readonly IHttpClientFactory _client;
+    private readonly ILogger _logger;
+    private readonly IRepositoryManager _repository;
 
-    /// <summary>
-    /// Getting all bands from repositories
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    [Route("getbands")]
-    public IActionResult GetBands()
+
+    public ParkController(IRepositoryManager repository, IMapper mapper, 
+      IHttpClientFactory client, ILogger logger)
     {
-      throw new NotImplementedException();
+      _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+      _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+      _client = client ?? throw new ArgumentNullException(nameof(client));
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
-    /// Getting specific BandId
+    /// Getting all bands
     /// </summary>
-    /// <param name="bandId"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public IActionResult GetBand(Guid bandId)
+    [Route("getband")]
+    [ResponseCache(Duration = 60)]
+    public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
-      if(bandId == null)
-        throw new ArgumentNullException(nameof(bandId));
+      var parksFromRepo = await _repository.Park.GetParks();
 
-      return Ok(bandId);
+      return Ok(parksFromRepo);
     }
+
+    /// <summary>
+    /// Getting something from external API
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<string> GetFromApi()
+
+    {
+      var client = _client.CreateClient();
+
+      client.BaseAddress =
+        new Uri("https://api.exchangeratesapi.io");
+      client.DefaultRequestHeaders.Add(
+        HeaderNames.UserAgent, "ExchangeRateViewer");
+
+      var response = await client.GetAsync("latest");
+
+      response.EnsureSuccessStatusCode();
+
+      return await response.Content.ReadAsStringAsync();
+    }
+    /// <summary>
+    /// Creating a new Park
+    /// </summary>
+    /// <param name="park"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public ActionResult<ParkyDto> CreatePark([FromBody] ParkForCreatingDto park)
+    {
+
+      var parkEntity = _mapper.Map<Parky>(park);
+
+      if (park == null)
+      {
+        _logger.LogError($"Something went wrong in the {nameof(CreatePark)} action");
+        return BadRequest("ParkForCreatingDto is null");
+      }
+
+
+      throw new NotImplementedException("errr");
+
+    }
+
   }
+
+
 }
+
+

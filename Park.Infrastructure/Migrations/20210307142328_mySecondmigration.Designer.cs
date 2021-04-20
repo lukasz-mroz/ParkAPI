@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkAPI.DataContext;
 
 namespace Park.Infrastructure.Migrations
 {
     [DbContext(typeof(ParkDbContext))]
-    partial class ParkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210307142328_mySecondmigration")]
+    partial class mySecondmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

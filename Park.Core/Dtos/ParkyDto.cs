@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parks.Core
+namespace Parks.Cores.Dtos
 {
-  public class Park
+  public class ParkyDto
   {
     [Key]
     public Guid Id { get; set; }
@@ -11,7 +11,5 @@ namespace Parks.Core
     public string Name { get; set; }
     [Required]
     public string State { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime Established { get; set; }
-  }
+    }
 }

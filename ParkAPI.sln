@@ -9,11 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.API", "ParkAPI\Park.AP
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.Infrastructure", "Park.Infrastructure\Park.Infrastructure.csproj", "{4ED14CD0-1EF3-4D6A-925F-E789EB521C39}"
-	ProjectSection(ProjectDependencies) = postProject
-		{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D} = {19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parks.Core", "Park.Core\Parks.Core.csproj", "{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parks.Cores", "Park.Core\Parks.Cores.csproj", "{19C3F2B2-A620-48C9-BB37-C73B3AECFE9D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Park.Tests", "Park.Tests\Park.Tests.csproj", "{D26AF5A2-780C-4BA8-BF16-DC088CA1CB63}"
 EndProject
