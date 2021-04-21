@@ -6,6 +6,6 @@ namespace Parks.Cores
 {
   public interface IParkRepository
   {
-    Task<IEnumerable<Parky>> GetAllParks(Guid parkId);
+    Task<IEnumerable<Parky>> GetAllParks();
   }
 }

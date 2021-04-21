@@ -38,13 +38,13 @@ namespace Park.API.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [Route("getband")]
+    [Route("getparks")]
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
       try
       {
-        var parksFromRepo = await _repository.GetAllParks(Guid.Parse("F9168C5E-CEB2-4FAA-B6BF-329BF39FA1E4"));
+        var parksFromRepo = await _repository.GetAllParks();
         return Ok(parksFromRepo);
       }
       catch (Exception e)

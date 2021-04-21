@@ -13,9 +13,9 @@ namespace Parks.Cores
     {
     }
 
-    public async Task<IEnumerable<Parky>> GetAllParks(Guid parkId)
+    public async Task<IEnumerable<Parky>> GetAllParks()
     {
-      var parks = await _dbContext.Parks.Where(c => c.Name == "MyName").ToListAsync();
+      var parks = await _dbContext.Parks.ToListAsync();
       return parks;
     }
     
