@@ -11,8 +11,6 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Parks.Cores;
-using Parks.Cores.Dtos;
-using Parks.Cores.RepositoryManager;
 
 namespace Park.API.Controllers
 {
@@ -22,17 +20,17 @@ namespace Park.API.Controllers
   {
     private readonly IMapper _mapper;
     private readonly IHttpClientFactory _client;
-    private readonly ILogger _logger;
-    private readonly IRepositoryManager _repository;
+    //private readonly ILogger _logger;
+    private readonly IParkRepository _repository;
 
 
-    public ParkController(IRepositoryManager repository, IMapper mapper, 
-      IHttpClientFactory client, ILogger logger)
+    public ParkController(IParkRepository repository, IMapper mapper, 
+      IHttpClientFactory client)
     {
       _repository = repository ?? throw new ArgumentNullException(nameof(repository));
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
       _client = client ?? throw new ArgumentNullException(nameof(client));
-      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -40,57 +38,23 @@ namespace Park.API.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [Route("getband")]
+    [Route("getparks")]
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
-      var parksFromRepo = await _repository.Park.GetParks();
-
-      return Ok(parksFromRepo);
-    }
-
-    /// <summary>
-    /// Getting something from external API
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    public async Task<string> GetFromApi()
-
-    {
-      var client = _client.CreateClient();
-
-      client.BaseAddress =
-        new Uri("https://api.exchangeratesapi.io");
-      client.DefaultRequestHeaders.Add(
-        HeaderNames.UserAgent, "ExchangeRateViewer");
-
-      var response = await client.GetAsync("latest");
-
-      response.EnsureSuccessStatusCode();
-
-      return await response.Content.ReadAsStringAsync();
-    }
-    /// <summary>
-    /// Creating a new Park
-    /// </summary>
-    /// <param name="park"></param>
-    /// <returns></returns>
-    [HttpPost]
-    public ActionResult<ParkyDto> CreatePark([FromBody] ParkForCreatingDto park)
-    {
-
-      var parkEntity = _mapper.Map<Parky>(park);
-
-      if (park == null)
+      try
       {
-        _logger.LogError($"Something went wrong in the {nameof(CreatePark)} action");
-        return BadRequest("ParkForCreatingDto is null");
+        var parksFromRepo = await _repository.GetAllParks();
+        return Ok(parksFromRepo);
+      }
+      catch (Exception e)
+      {
+        //_logger.LogError($"Something went wrong in the {nameof(GetParks)} action {e}");
+        return StatusCode(500, "Internal server error");
       }
 
-
-      throw new NotImplementedException("errr");
-
     }
+
 
   }
 

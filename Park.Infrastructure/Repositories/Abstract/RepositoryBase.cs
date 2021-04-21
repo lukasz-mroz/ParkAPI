@@ -16,7 +16,7 @@ namespace Parks.Cores
 
     public IEnumerable<T> GetAll()
     {
-      throw new System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public IEnumerable<T> GetOne(Guid id)
@@ -24,7 +24,10 @@ namespace Parks.Cores
       throw new NotImplementedException();
     }
 
-    public void Create(T entity) => _dbContext.Set<T>().Add(entity);
+    public void Create(T entity)
+    {
+      throw new NotImplementedException();
+    }
     public void Update(Guid id)
     {
       throw new NotImplementedException();
