@@ -13,51 +13,12 @@ namespace Parks.Cores
     {
     }
 
-    public async Task<IEnumerable<Parky>> GetParks()
+    public async Task<IEnumerable<Parky>> GetAllParks(Guid parkId)
     {
-      var parkFromDb = await _dbContext.Parks.ToListAsync();
-      return parkFromDb;
+      var parks = await _dbContext.Parks.Where(c => c.Name == "MyName").ToListAsync();
+      return parks;
     }
-
-    public IEnumerable<Parky> GetPark(Guid parkId)
-    {
-      if (parkId == null)
-        throw new ArgumentNullException(nameof(parkId));
-
-      return _dbContext.Parks.Where(a => a.Id == parkId).ToList();
-    }
-
-    public void AddPark(Parky park)
-    {
-      if (park == null)
-        throw new ArgumentNullException(nameof(park));
-
-      _dbContext.Parks.Add(park);
-    }
-
-    public void Create<T>(T entity)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void UpdatePark(Parky park)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void AddParks(IEnumerable<Parky> parks)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void DeletePark(Parky parky)
-    {
-      if (parky == null)
-        throw new ArgumentNullException(nameof(parky));
-
-      _dbContext.Parks.Remove(parky);
-    }
-
     
+
   }
 }

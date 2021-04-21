@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParkAPI.DataContext;
 using Parks.Cores;
-using Parks.Cores.RepositoryManager;
 
 namespace ParkAPI
 {
@@ -35,7 +34,6 @@ namespace ParkAPI
       services.AddScoped<IParkRepository, ParkRepository>();
       services.AddAutoMapper(typeof(Startup));
       services.AddHttpClient();
-      services.AddScoped<IRepositoryManager, RepositoryManager>();
 
     }
 
