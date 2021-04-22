@@ -22,7 +22,7 @@ namespace ParkAPI.DataContext
           Established = DateTime.Today,
           Id = Guid.Parse("F9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
           State = "New",
-          Name = "MyName",
+          Name = "",
           IsDeleted = false
 
         }
@@ -30,12 +30,23 @@ namespace ParkAPI.DataContext
       modelBuilder.Entity<Parky>().HasData(
         new Parky()
         {
-          Created = DateTime.Parse("1990-10-12"),
-          Established = DateTime.FromBinary(101000010101111),
+          Created = DateTime.Now,
+          Established = DateTime.Parse("1990-10-12"),
           Id = Guid.NewGuid(),
-          Name = "Alabama",
-          State = String.Concat("my Dear Frodo" + " Back and Again"),
+          Name = "Kapiniak",
+          State = String.Concat("Mazovian" + "Voivodeship"),
           IsDeleted = true
+        });
+      modelBuilder.Entity<Parky>().HasData(
+        new Parky()
+        {
+          Created = DateTime.UtcNow,
+          Established = DateTime.Parse("1990-10-12"),
+          Id = Guid.NewGuid(),
+          State = "Podkarpackie Voivodeship",
+          Name = "Bieszczady",
+          IsDeleted = false,
+
         });
       base.OnModelCreating(modelBuilder);
     }

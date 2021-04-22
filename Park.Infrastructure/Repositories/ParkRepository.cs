@@ -18,7 +18,29 @@ namespace Parks.Cores
       var parks = await _dbContext.Parks.ToListAsync();
       return parks;
     }
-    
 
+    public async Task<Parky> GetPark(Guid parkId)
+    {
+      var park = await _dbContext.Parks.Where(a => a.Id == parkId).FirstOrDefaultAsync();
+      return park;
+    }
+
+    public void CreatePark(Parky park)
+    {
+      if (park == null)
+        throw new ArgumentNullException(nameof(park));
+      
+      _dbContext.Parks.Add(park);
+    }
+
+    public void DeletePark(Guid parkId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public bool Save()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

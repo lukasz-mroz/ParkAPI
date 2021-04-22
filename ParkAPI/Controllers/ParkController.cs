@@ -34,7 +34,7 @@ namespace Park.API.Controllers
     }
 
     /// <summary>
-    /// Getting all bands
+    /// Getting all parks
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -53,6 +53,32 @@ namespace Park.API.Controllers
         return StatusCode(500, "Internal server error");
       }
 
+    }
+    /// <summary>
+    /// Get one band
+    /// </summary>
+    /// <param name="parkId"></param>
+    /// <returns></returns>
+    [HttpGet("{parkId}", Name = "GetPark") ]
+    [ResponseCache(Duration = 60)]
+    public async Task<ActionResult<Parky>> GetPark(Guid parkId)
+    {
+        var parkFromRepo = await _repository.GetPark(parkId);
+        return Ok(parkFromRepo);
+    
+    }
+
+    /// <summary>
+    /// Create a new park
+    /// </summary>
+    /// <param name="park"></param>
+    [HttpPost]
+    [Route("createpark")]
+    public void CreatePark(Parky park)
+      {
+      // TODO rewrite using DTOs
+      _repository.CreatePark(park);
+      _repository.Save();
     }
 
 

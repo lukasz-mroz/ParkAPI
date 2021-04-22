@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using ParkAPI.DataContext;
 using Parks.Cores;
 
@@ -34,6 +35,13 @@ namespace ParkAPI
       services.AddScoped<IParkRepository, ParkRepository>();
       services.AddAutoMapper(typeof(Startup));
       services.AddHttpClient();
+      services.AddSwaggerGen(options =>
+        options.SwaggerDoc("ParksOpenAPI",
+          new OpenApiInfo()
+          {
+            Title = "Parks API",
+            Version = "1",
+          }));
 
     }
 
@@ -46,6 +54,9 @@ namespace ParkAPI
       }
 
       app.UseHttpsRedirection();
+      app.UseSwagger();
+      app.UseSwaggerUI(options =>
+        options.SwaggerEndpoint("/swagger/ParksOpenAPI/swagger.json", "ParkAPI"));
 
       app.UseRouting();
 

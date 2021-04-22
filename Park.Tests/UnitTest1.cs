@@ -1,27 +1,24 @@
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using NUnit.Framework;
+using Park.API.Controllers;
 
 namespace Park.Tests
 {
   public class Tests
   {
-    [SetUp]
-    public void Setup()
-    {
-      
-    }
-
-    public static bool isThisString(string input)
-    {
-      bool result = input.Length > 5;
-      return result;
-    }
-
+    
     [Test]
     public void Test1()
     {
-      bool result = isThisString("abc");
-      Assert.AreEqual(false, result);
+      // Arrange
+      //var park = 
+
+      // Act
+
+      // Assert
+
+     // Assert.AreEqual();
     }
   }
 }
