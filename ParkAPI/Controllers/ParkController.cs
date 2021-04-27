@@ -103,7 +103,11 @@ namespace Park.API.Controllers
       return Created("GetPark", park);
     }
 
-
+    /// <summary>
+    /// Delete a park
+    /// </summary>
+    /// <param name="parkId"></param>
+    /// <returns></returns>
     [HttpDelete]
     [Route("deletepark")]
     public ActionResult DeletePark([FromQuery]Guid parkId)
@@ -112,7 +116,6 @@ namespace Park.API.Controllers
       _repository.Save();
 
       return Ok(parkId);
-
 
     }
 

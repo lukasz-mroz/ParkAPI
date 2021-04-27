@@ -15,13 +15,15 @@ namespace Parks.Cores
 
     public async Task<IEnumerable<Parky>> GetAllParks()
     {
-      var parks = await _dbContext.Parks.ToListAsync();
+      var parks = await _dbContext.Parks.Where(a => a.IsDeleted == false).ToListAsync();
+
       return parks;
     }
 
     public async Task<Parky> GetPark(Guid parkId)
     {
       var park = await _dbContext.Parks.Where(a => a.Id == parkId).FirstOrDefaultAsync();
+      
       return park;
     }
 
