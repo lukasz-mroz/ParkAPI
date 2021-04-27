@@ -24,7 +24,7 @@ namespace Park.API.Controllers
     private readonly IParkRepository _repository;
 
 
-    public ParkController(IParkRepository repository, IMapper mapper, 
+    public ParkController(IParkRepository repository, IMapper mapper,
       IHttpClientFactory client)
     {
       _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -54,18 +54,35 @@ namespace Park.API.Controllers
       }
 
     }
+
     /// <summary>
     /// Get one band
     /// </summary>
+    /// <remarks>
+    ///   POST api/Employee
+    ///     {        
+    ///       "firstName": "Mike",
+    ///       "lastName": "Andrew",
+    ///       "emailId": "Mike.Andrew@gmail.com"        
+    ///     }
+    /// </remarks>
     /// <param name="parkId"></param>
     /// <returns></returns>
-    [HttpGet("{parkId}", Name = "GetPark") ]
+    [HttpGet("{parkId}", Name = "GetPark" )]
+
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<Parky>> GetPark(Guid parkId)
     {
+      try
+      {
         var parkFromRepo = await _repository.GetPark(parkId);
         return Ok(parkFromRepo);
-    
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, "something went wrong");
+      }
+
     }
 
     /// <summary>
@@ -74,17 +91,32 @@ namespace Park.API.Controllers
     /// <param name="park"></param>
     [HttpPost]
     [Route("createpark")]
-    public void CreatePark(Parky park)
-      {
+    public ActionResult CreatePark(Parky park)
+    {
+
       // TODO rewrite using DTOs
       _repository.CreatePark(park);
       _repository.Save();
+
+
+
+      return Created("GetPark", park);
     }
 
 
+    [HttpDelete]
+    [Route("deletepark")]
+    public ActionResult DeletePark([FromQuery]Guid parkId)
+    {
+      _repository.DeletePark(parkId);
+      _repository.Save();
+
+      return Ok(parkId);
+
+
+    }
+
   }
-
-
 }
 
 

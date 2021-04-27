@@ -41,6 +41,7 @@ namespace ParkAPI
           {
             Title = "Parks API",
             Version = "1",
+            Description = "A simple park API"
           }));
 
     }
@@ -56,7 +57,7 @@ namespace ParkAPI
       app.UseHttpsRedirection();
       app.UseSwagger();
       app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/swagger/ParksOpenAPI/swagger.json", "ParkAPI"));
+        options.SwaggerEndpoint("/swagger.json", "ParkAPI"));
 
       app.UseRouting();
 

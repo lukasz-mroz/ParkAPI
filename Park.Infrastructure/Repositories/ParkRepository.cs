@@ -33,14 +33,26 @@ namespace Parks.Cores
       _dbContext.Parks.Add(park);
     }
 
+    public bool ParkExists(Guid parkId)
+    {
+      if (parkId == Guid.Empty)
+        throw new ArgumentNullException(nameof(parkId));
+
+      return _dbContext.Parks.Any(a => a.Id == parkId);
+    }
+
     public void DeletePark(Guid parkId)
     {
-      throw new NotImplementedException();
+      if (parkId == Guid.Empty)
+        throw new ArgumentNullException(nameof(parkId));
+
+      var result = _dbContext.Parks.Find(parkId);
+      result.IsDeleted = true;
     }
 
     public bool Save()
     {
-      throw new NotImplementedException();
+      return _dbContext.SaveChanges() > 0;
     }
   }
 }

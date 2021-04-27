@@ -9,6 +9,7 @@ namespace Parks.Cores
     Task<IEnumerable<Parky>> GetAllParks();
     Task<Parky> GetPark(Guid parkId);
     void CreatePark(Parky park);
+    bool ParkExists(Guid parkId);
     void DeletePark(Guid parkId);
     bool Save();
   }
