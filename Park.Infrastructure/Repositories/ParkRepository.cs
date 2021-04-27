@@ -27,12 +27,20 @@ namespace Parks.Cores
       return park;
     }
 
-    public void CreatePark(Parky park)
+    public async Task CreatePark(Parky park)
     {
       if (park == null)
         throw new ArgumentNullException(nameof(park));
       
-      _dbContext.Parks.Add(park);
+      await _dbContext.Parks.AddAsync(park);
+    }
+
+    public void UpdatePark(Parky park)
+    {
+      if (park == null)
+        throw new ArgumentNullException(nameof(park));
+
+        _dbContext.Parks.Update(park);
     }
 
     public bool ParkExists(Guid parkId)

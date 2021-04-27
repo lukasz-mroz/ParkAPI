@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Parks.Cores;
-// Mapster
+
 namespace ParkAPI.DataContext
 {
   public class ParkDbContext : DbContext

@@ -37,8 +37,7 @@ namespace Park.API.Controllers
     /// Getting all parks
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
-    [Route("getparks")]
+    [HttpGet("getparks")]
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<Parky>>> GetParks()
     {
@@ -58,20 +57,11 @@ namespace Park.API.Controllers
     /// <summary>
     /// Get one band
     /// </summary>
-    /// <remarks>
-    ///   POST api/Employee
-    ///     {        
-    ///       "firstName": "Mike",
-    ///       "lastName": "Andrew",
-    ///       "emailId": "Mike.Andrew@gmail.com"        
-    ///     }
-    /// </remarks>
     /// <param name="parkId"></param>
     /// <returns></returns>
-    [HttpGet("{parkId}", Name = "GetPark" )]
-
+    [HttpGet("getpark",Name = "GetPark")]
     [ResponseCache(Duration = 60)]
-    public async Task<ActionResult<Parky>> GetPark(Guid parkId)
+    public async Task<ActionResult<Parky>> GetPark([FromQuery]Guid parkId)
     {
       try
       {
@@ -89,19 +79,35 @@ namespace Park.API.Controllers
     /// Create a new park
     /// </summary>
     /// <param name="park"></param>
-    [HttpPost]
-    [Route("createpark")]
-    public ActionResult CreatePark(Parky park)
+    [HttpPost("createpark")]
+    public async Task<IActionResult> CreatePark(Parky park)
     {
-
       // TODO rewrite using DTOs
-      _repository.CreatePark(park);
+      await _repository.CreatePark(park);
       _repository.Save();
-
-
 
       return Created("GetPark", park);
     }
+
+    [HttpPut("updatepark")]
+    public async Task<IActionResult> UpdatePark(Parky park)
+    {
+      try
+      {
+        _repository.UpdatePark(park);
+        _repository.Save();
+
+        return Ok(park);
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, "Something went wrong");
+      }
+
+
+      
+    }
+    
 
     /// <summary>
     /// Delete a park

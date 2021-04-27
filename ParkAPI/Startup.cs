@@ -36,11 +36,11 @@ namespace ParkAPI
       services.AddAutoMapper(typeof(Startup));
       services.AddHttpClient();
       services.AddSwaggerGen(options =>
-        options.SwaggerDoc("ParksOpenAPI",
+        options.SwaggerDoc("v1",
           new OpenApiInfo()
           {
-            Title = "Parks API",
-            Version = "1",
+            Title = "ParkAPI",
+            Version = "3.0",
             Description = "A simple park API"
           }));
 
@@ -57,7 +57,7 @@ namespace ParkAPI
       app.UseHttpsRedirection();
       app.UseSwagger();
       app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/swagger.json", "ParkAPI"));
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "ParkAPI"));
 
       app.UseRouting();
 
