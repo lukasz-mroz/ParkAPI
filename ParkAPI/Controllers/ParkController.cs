@@ -16,7 +16,6 @@ using Parks.Cores;
 namespace Park.API.Controllers
 {
   [ApiController]
-  [Authorize]
   [Route("[controller]")]
   public class ParkController : ControllerBase
   {

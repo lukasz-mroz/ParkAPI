@@ -31,10 +31,7 @@ namespace ParkAPI
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
-      services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<AppDbContext>()
-        .AddDefaultTokenProviders();
-
+      
       services.AddDbContext<ParkDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddScoped<IParkRepository, ParkRepository>();
@@ -66,7 +63,6 @@ namespace ParkAPI
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "ParkAPI"));
 
       app.UseRouting();
-      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
