@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ParkAPI.DataContext;
@@ -30,9 +31,14 @@ namespace ParkAPI
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
+
       services.AddDbContext<ParkDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddScoped<IParkRepository, ParkRepository>();
+      services.AddSingleton<ILoggerFactory, LoggerFactory>();
       services.AddAutoMapper(typeof(Startup));
       services.AddHttpClient();
       services.AddSwaggerGen(options =>
@@ -60,7 +66,7 @@ namespace ParkAPI
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "ParkAPI"));
 
       app.UseRouting();
-
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>

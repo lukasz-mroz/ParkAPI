@@ -23,7 +23,9 @@ namespace Parks.Cores
     public async Task<Parky> GetPark(Guid parkId)
     {
       var park = await _dbContext.Parks.Where(a => a.Id == parkId).FirstOrDefaultAsync();
-      
+     
+      if (parkId != park.Id)
+        throw new ArgumentNullException(nameof(parkId));
       return park;
     }
 

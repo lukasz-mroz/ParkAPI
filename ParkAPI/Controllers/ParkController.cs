@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
@@ -15,22 +16,23 @@ using Parks.Cores;
 namespace Park.API.Controllers
 {
   [ApiController]
+  [Authorize]
   [Route("[controller]")]
   public class ParkController : ControllerBase
   {
     private readonly IMapper _mapper;
     private readonly IHttpClientFactory _client;
-    //private readonly ILogger _logger;
+    private readonly ILogger _logger;
     private readonly IParkRepository _repository;
 
 
     public ParkController(IParkRepository repository, IMapper mapper,
-      IHttpClientFactory client)
+      IHttpClientFactory client, ILogger<ParkController> logger)
     {
       _repository = repository ?? throw new ArgumentNullException(nameof(repository));
       _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
       _client = client ?? throw new ArgumentNullException(nameof(client));
-      //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -48,7 +50,7 @@ namespace Park.API.Controllers
       }
       catch (Exception e)
       {
-        //_logger.LogError($"Something went wrong in the {nameof(GetParks)} action {e}");
+        _logger.LogError($"Something went wrong in the {nameof(GetParks)} action {e}");
         return StatusCode(500, "Internal server error");
       }
 
@@ -59,7 +61,7 @@ namespace Park.API.Controllers
     /// </summary>
     /// <param name="parkId"></param>
     /// <returns></returns>
-    [HttpGet("getpark",Name = "GetPark")]
+    [HttpGet("getpark", Name = "GetPark")]
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<Parky>> GetPark([FromQuery]Guid parkId)
     {
@@ -67,9 +69,11 @@ namespace Park.API.Controllers
       {
         var parkFromRepo = await _repository.GetPark(parkId);
         return Ok(parkFromRepo);
+        
       }
       catch (Exception e)
       {
+        _logger.LogError($"Could not find the {parkId} action {e}");
         return StatusCode(500, "something went wrong");
       }
 
@@ -80,6 +84,7 @@ namespace Park.API.Controllers
     /// </summary>
     /// <param name="park"></param>
     [HttpPost("createpark")]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> CreatePark(Parky park)
     {
       // TODO rewrite using DTOs
@@ -89,7 +94,13 @@ namespace Park.API.Controllers
       return Created("GetPark", park);
     }
 
+    /// <summary>
+    /// Update a park
+    /// </summary>
+    /// <param name="park"></param>
+    /// <returns></returns>
     [HttpPut("updatepark")]
+    [ResponseCache(Duration = 60)]
     public async Task<IActionResult> UpdatePark(Parky park)
     {
       try
@@ -101,13 +112,13 @@ namespace Park.API.Controllers
       }
       catch (Exception e)
       {
+        _logger.LogError($"Could not find an element to update");
         return StatusCode(500, "Something went wrong");
       }
 
 
       
     }
-    
 
     /// <summary>
     /// Delete a park
@@ -116,6 +127,7 @@ namespace Park.API.Controllers
     /// <returns></returns>
     [HttpDelete]
     [Route("deletepark")]
+    [ResponseCache(Duration = 60)]
     public ActionResult DeletePark([FromQuery]Guid parkId)
     {
       _repository.DeletePark(parkId);
